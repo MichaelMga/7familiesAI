@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html>
+
+
+
+
+
+   <h1>C'est le tour du joueur1</h1>
+   
+
+
+
+   Vos cartes:
+
+
+     <div id='playerHand'>
+
+
+        <h5>Votre main</h5>
+
+
+        <div id=''>
+            <h5>Plombiers</h5>
+            <div id='mother'>Mère</div>
+            <div id='child'>Fils</div>
+        </div>
+        <div id='astronauts'>
+            <h5>Astronautes</h5>
+            <div id='mother'>Mère</div>
+            <div id='child'>Fils</div>
+        </div>
+
+
+     </div>
+
+
+
+
+     <br>
+     <br>
+     <button>Demander une carte à l'IA</button>
+     <button>Demander une carte au joueur2</button>
+
+
+
+     
+
+     <h5>Joueur1, Dans la famille 
+         
+        <select id='selectedFamily'>
+
+        <option value="">Sélectionnez une famille</option>
+        <option value="family1">Famille1</option>
+        <option value="">Famille2</option>
+        <option value="">Famille3</option>
+        <option value="">Famille4</option>
+        <option value="">Famille5</option>
+        <option value="">Famille6</option>
+        <option value="">Famille7</option>
+
+     </select>
+    
+     Je souhaiterais 
+
+
+     <select id='selectedFamilyMember'>
+        <option value="">Sélectionnez un membre de la famille</option>
+        <option value="mère">La Mère</option>
+        <option value="père">Le Père</option>
+        <option value="fille">La Fille</option>
+        <option value="Fils">Le Fils</option>
+        <option value="grand mère">La Grand mère</option>
+        <option value="grand père">Le Grand père</option>
+     </select>
+      
+
+
+     <input type="text" placeholder="message personnel(optionnel)">
+
+
+
+     <button onclick='sendQuestion()'>Poser une question</button>
+
+
+    
+    </h5>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js'></script>
+
+<script>
+
+var selectedFamily = document.getElementById('selectedFamily');
+
+var selectedFamilyMember = document.getElementById('selectedFamily');
+
+
+//by instantiating this object, the event listener 'connection' is triggered.
+
+
+
+    var socket = io();
+
+     function sendQuestion(){
+
+         socket.emit('question asked', selectedFamily.value);
+
+         alert('question sent');
+
+         alert( 'the value of selected families is ' + selectedFamily.value);
+     }
+
+    
+      socket.on('question asked' , function(selectedFamily){
+
+            alert('notif received' + selectedFamily);
+
+            console.log('notif received');
+
+      });
+
+
+
+
+
+      //at each turn
+
+
+                                        /* 
+
+                                         trade
+
+
+
+                                         exchange?
+
+                                yes                     no
+
+ we know each players card                                     we know that the asker has a card of a certain color, and that the answerer doesn't
+
+          */
+
+
+
+
+
+
+
+
+
+
+      //So, the AI only knows what's in its hands
+
+      //Then, at each interaction, it will actually create a decision tree
+
+
+      //We'll use hash = 'id of the card' * player id. If this card is already in our vizualization's map (senders side), then we delete it.
+
+      //Then, we create a hash and set the value to the offerer.
+
+      //Now, we have a map. We know each player have a certain type of value.
+
+      //We'll only take what other players have , but without showing we have each or each set (one by one, unless we can get a set).
+
+      //So, we simply need to take all the cards we know other players have, slowly.
+
+      //Once in a while, we make some random questions. We gain something : we know that this card is either : In the other players hand, or in the deck.
+
+      //We let three or four turns pass. (If we have exact knowledge of who have it, we put it in our map)
+
+
+      //Strategies : listen to the information and store it.
+
+      //ask questions to get information (either a player has or doesn't)
+
+      //Take one card at a time, unless you can complete a set.
+
+      //If you made a full 'turn', and you come back for a second card, if there is some randomness, ask a random question, so players don't detect you.
+
+      //Accumulate, and keep in mind what each player have in hand.
+
+      //Then, when to ask for the decisive request? You can't. It's only a bet. But, ways to erase a lot of it.
+      
+      //Example : both players probably already explained that they wouldn't have it. If no players gave any indication : if a player never made any request of a card, we'll conclude he probably don't have it.
+      
+
+
+</script>
+
+
+
+
+
+</html>
